@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Deck.gl + Carto Basemap</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+    <!-- Deck.gl -->
+    <script src="https://unpkg.com/deck.gl@latest/dist.min.js"></script>
+    <!-- MapLibre -->
+    <script src="https://unpkg.com/maplibre-gl@3.0.0/dist/maplibre-gl.js"></script>
+    <link
+      href="https://unpkg.com/maplibre-gl@3.0.0/dist/maplibre-gl.css"
+      rel="stylesheet"
+    />
+    <!-- Papa Parse -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  </head>
+
+  <body>
+    <div id="map"></div>
+    <script>
+      fetch('data.csv')
+        .then((response) => response.text())
+        .then((csvText) => {
+          const parsed = Papa.parse(csvText, {
+            header: true,
+            dynamicTyping: true,
+          });
+          const data = parsed.data.filter(
+            (d) => d.Lon !== undefined && d.Lat !== undefined
+          );
+
+          // Create MapLibre map instance first
+          const map = new maplibregl.Map({
+            container: 'map',
+            style:
+              'https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json',
+          });
+
+          const scatterplotLayer = new deck.ScatterplotLayer({
+            id: 'scatterplot-layer',
+            data,
+            getPosition: (d) => [d.Lon, d.Lat],
+            getFillColor: [255, 0, 0, 200],
+            radiusUnits: 'pixels',
+            getRadius: 5,
+            pickable: true,
+          });
+
+          const deckgl = new deck.Deck({
+            container: 'map',
+            mapLib: map,
+            initialViewState: {
+              longitude: 0,
+              latitude: 0,
+              zoom: 1,
+            },
+            controller: true,
+            layers: [scatterplotLayer],
+            parameters: { clearColor: [0, 0, 0, 0] },
+            // Synchronize view states
+            onViewStateChange: ({ viewState }) => {
+              map.jumpTo({
+                center: [viewState.longitude, viewState.latitude],
+                zoom: viewState.zoom,
+                bearing: viewState.bearing,
+                pitch: viewState.pitch,
+              });
+            },
+          });
+        })
+        .catch((err) => console.error(err));
+    </script>
+  </body>
+</html>
