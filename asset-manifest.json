@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/stackblitz-starters-fpjdlx7a/static/css/main.beca6c80.css",
-    "main.js": "/stackblitz-starters-fpjdlx7a/static/js/main.bc95a3e3.js",
+    "main.js": "/stackblitz-starters-fpjdlx7a/static/js/main.a9b9088a.js",
     "static/js/66.d8bfa86e.chunk.js": "/stackblitz-starters-fpjdlx7a/static/js/66.d8bfa86e.chunk.js",
     "index.html": "/stackblitz-starters-fpjdlx7a/index.html",
     "main.beca6c80.css.map": "/stackblitz-starters-fpjdlx7a/static/css/main.beca6c80.css.map",
-    "main.bc95a3e3.js.map": "/stackblitz-starters-fpjdlx7a/static/js/main.bc95a3e3.js.map",
+    "main.a9b9088a.js.map": "/stackblitz-starters-fpjdlx7a/static/js/main.a9b9088a.js.map",
     "66.d8bfa86e.chunk.js.map": "/stackblitz-starters-fpjdlx7a/static/js/66.d8bfa86e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.beca6c80.css",
-    "static/js/main.bc95a3e3.js"
+    "static/js/main.a9b9088a.js"
   ]
 }
